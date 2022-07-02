@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+
+<head>
+	<meta charset="UTF-8"> 
+	<title>JavaScript Game</title>
+	<script>
+		const items = ['Rock', 'Paper', 'Scissors'];
+		
+		/* returns a random move from items array */
+		function computerPlay() {
+			return items[Math.floor(Math.random()*items.length)];			
+		};
+		
+		/* plays a single round and returns a string */
+		function playRound(computerSelection, playerSelection) {
+			computerSelection = computerPlay();
+			switch (true) {
+				case (computerSelection === items[0] && playerSelection === items[2]):
+					return "You lose! " + playerSelection + " beats " + computerSelection; 
+					break;
+				case (computerSelection === items[0] && playerSelection === items[1]):
+					return "You win! " + computerSelection + " beats " + playerSelection;
+					break;
+				case (computerSelection === items[2] && playerSelection === items[0]):
+					return "You win! " + playerSelection + " beats " + computerSelection;
+					break;
+				case (computerSelection === items[2] && playerSelection === items[1]):
+					return "You win! " + computerSelection + " beats " + playerSelection;
+					break;
+				case (computerSelection === items[1] && playerSelection === items[0]):
+					return "You lose! " + playerSelection + " beats " + computerSelection;
+					break;
+				case (computerSelection === items[1] && playerSelection === items[2]):
+					return "You lose! " + computerSelection + " beats " + playerSelection;
+					break;	
+				default: 
+					return "Draw. " + computerSelection + " neither beats nor loses to " + playerSelection;
+			};
+		};
+		
+		/* plays 5 rounds*/
+		function game() {
+			let computerScore = 0;
+			let playerScore = 0;
+			
+			/*  loops 5 rounds, logs the rounds and applies scores based on playRound result string*/
+			for (let i = 0; i < 5; i++) {
+				let playerSelection = promptPlayer();
+				let currentRound = playRound(computerSelection, playerSelection);
+				/* logs each round */
+				console.log("Round " + (i + 1) + ": " + currentRound)
+				if (currentRound.includes("You win!")) {
+					playerScore++;
+				} else if (currentRound.includes("You lose!")) {
+					computerScore++;
+				};
+			};
+			
+			/* logs the results of the game based on score*/
+			if (computerScore > playerScore) {
+				console.log("You lose! You: " + playerScore + " Computer: " + computerScore);			
+			} else if (computerScore < playerScore) {
+				console.log("You win! You: " + playerScore + " Computer: " + computerScore);			
+			} else {
+				console.log("Draw. You: " + playerScore + " Computer: " + computerScore);			
+			};
+		};
+		
+		/* returns valid player moves based on case-insensitive regex*/
+		function promptPlayer() {
+			while(true) {
+				var playerSelection = prompt("Choose your move. Rock, paper or scissors?");
+				switch (true){
+					case /rock/i.test(playerSelection):
+						return "Rock";
+						break;
+					case /paper/i.test(playerSelection):
+						return "Paper";
+						break;
+					case /scissors/i.test(playerSelection):
+						return "Scissors";
+						break;
+					/* forces player to keep entering value until valid input*/
+					default:
+						alert("Not a valid move. Try again:")	
+				};
+			};
+		};
+		
+		const computerSelection = computerPlay();
+		game();
+
+	</script>
+
+</head>
+
+<body>
+
+
+</body>
+
+
+
+</html>
