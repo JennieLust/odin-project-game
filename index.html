@@ -11,20 +11,60 @@
 
 <body>
 
-
 	<script>
 		/*init body*/
 		const body = document.querySelector('body');
+		body.style.backgroundColor = "brown"
+
+		/*header*/
+		const header = document.createElement("h1");
+		header.style.color = "white";
+		header.innerText = "ROCK PAPER SCISSORS \n five round game"
+		header.style.fontFamily = "century gothic"
+		header.style.textAlign = "center";
+		header.style.paddingTop = "20px"
+
+		/*make button div*/
+		const btnDiv = document.createElement("div");
+		btnDiv.style.textAlign = "center";
+		btnDiv.style.paddingTop = "10px";
 
 		/* make three buttons for each selection */ 
 		const btnRock = document.createElement("button");
 		btnRock.innerText = "Rock";
+		btnRock.style.backgroundColor = "CadetBlue";
+		btnRock.style.color = "white"
+		btnRock.style.width = "120px"
+		btnRock.style.border = "none";
+		btnRock.style.padding = "10px 15px 10px 15px";
+		btnRock.style.fontSize = "20px"
+		btnRock.style.margin = "10px"
+		btnRock.style.borderRadius = "5px"
+		btnRock.style.boxShadow = "0 6px 14px 0 rgba(0,0,0,0.2), 0 4px 18px 0 rgba(0,0,0,0.19)"
 
 		const btnPaper = document.createElement("button");
 		btnPaper.innerText = "Paper";
+		btnPaper.style.backgroundColor = "CadetBlue";
+		btnPaper.style.color = "white";
+		btnPaper.style.border = "none";
+		btnPaper.style.padding = "10px 15px 10px 15px";
+		btnPaper.style.fontSize = "20px"
+		btnPaper.style.margin = "10px"
+		btnPaper.style.borderRadius = "5px"
+		btnPaper.style.boxShadow = "0 6px 14px 0 rgba(0,0,0,0.2), 0 4px 18px 0 rgba(0,0,0,0.19)"
+		btnPaper.style.width = "120px"
 
 		const btnScissors = document.createElement("button");
 		btnScissors.innerText = "Scissors";
+		btnScissors.style.backgroundColor = "CadetBlue";
+		btnScissors.style.border = "none";
+		btnScissors.style.color = "white";
+		btnScissors.style.padding = "10px 15px 10px 15px";
+		btnScissors.style.fontSize = "20px"
+		btnScissors.style.margin = "10px"
+		btnScissors.style.borderRadius = "5px"
+		btnScissors.style.boxShadow = "0 6px 14px 0 rgba(0,0,0,0.2), 0 4px 18px 0 rgba(0,0,0,0.19)"
+		btnScissors.style.width = "120px"
 
 		/* How do I get this to update/be called again when the values change??*/
 		/* Plus display each round in text? */
@@ -34,11 +74,20 @@
 		var round = 0;
 
 		const resDiv = document.createElement("div");
+		resDiv.style.textAlign = "center"
+		resDiv.style.fontFamily = "century gothic";
+		resDiv.style.color = "white";
+		resDiv.style.fontSize = "26px";
+
 		const resPar = document.createElement("p");
 		resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+		resPar.style.fontSize = "22px";
 		const resRound = document.createElement("p");
 		resRound.innerText = "Round " + round;
 		const resWinner = document.createElement("p");
+
+		resWinner.style.color = "yellow";
+		resWinner.style.fontSize = "30px"
 
 		/*event listernets, assign playerSelection and run one round*/
 		btnRock.addEventListener('click', () => {
@@ -203,9 +252,11 @@
 		/*game();*/
 
 		/*appends to DOM*/
-		body.appendChild(btnPaper);
-		body.appendChild(btnRock);
-		body.appendChild(btnScissors);
+		body.appendChild(header);
+		body.appendChild(btnDiv)
+		btnDiv.appendChild(btnPaper);
+		btnDiv.appendChild(btnRock);
+		btnDiv.appendChild(btnScissors);
 		body.appendChild(resDiv);
 		resDiv.appendChild(resRound);
 		resDiv.appendChild(resPar)
