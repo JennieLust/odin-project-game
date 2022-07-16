@@ -5,7 +5,98 @@
 <head>
 	<meta charset="UTF-8"> 
 	<title>JavaScript Game</title>
+	
+
+</head>
+
+<body>
+
+
 	<script>
+		/*init body*/
+		const body = document.querySelector('body');
+
+		/* make three buttons for each selection */ 
+		const btnRock = document.createElement("button");
+		btnRock.innerText = "Rock";
+
+		const btnPaper = document.createElement("button");
+		btnPaper.innerText = "Paper";
+
+		const btnScissors = document.createElement("button");
+		btnScissors.innerText = "Scissors";
+
+		/* How do I get this to update/be called again when the values change??*/
+		/* Plus display each round in text? */
+		var playerSelection = "";
+		var playerScore = 0;
+		var computerScore = 0;
+		var round = 0;
+
+		const resDiv = document.createElement("div");
+		const resPar = document.createElement("p");
+		resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+		const resRound = document.createElement("p");
+		resRound.innerText = "Round " + round;
+		const resWinner = document.createElement("p");
+
+		/*event listernets, assign playerSelection and run one round*/
+		btnRock.addEventListener('click', () => {
+			playerSelection = "Rock";
+			console.log(playRound(computerSelection, playerSelection))
+			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+			resRound.innerText = "Round " + round;
+			if (round >= 5) {
+			btnRock.disabled = true;
+			btnPaper.disabled = true;
+			btnScissors.disabled = true;
+			if (playerScore > computerScore) {
+				resWinner.innerText = "You won!"
+			} else if (playerScore < computerScore) {
+				resWinner.innerText = "Computer won!"
+			} else {
+				resWinner.innerText = "It's a draw!"
+			}
+		};
+
+		});
+		btnPaper.addEventListener('click', () => {
+			playerSelection = "Paper";
+			console.log(playRound(computerSelection, playerSelection));
+			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+			resRound.innerText = "Round " + round;
+			if (round >= 5) {
+			btnRock.disabled = true;
+			btnPaper.disabled = true;
+			btnScissors.disabled = true;
+			if (playerScore > computerScore) {
+				resWinner.innerText = "You won!"
+			} else if (playerScore < computerScore) {
+				resWinner.innerText = "Computer won!"
+			} else {
+				resWinner.innerText = "It's a draw!"
+			}
+		};
+		});
+		btnScissors.addEventListener('click', () => {
+			playerSelection = "Scissors";
+			console.log(playRound(computerSelection, playerSelection));
+			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+			resRound.innerText = "Round " + round;
+			if (round >= 5) {
+			btnRock.disabled = true;
+			btnPaper.disabled = true;
+			btnScissors.disabled = true;
+			if (playerScore > computerScore) {
+				resWinner.innerText = "You won!"
+			} else if (playerScore < computerScore) {
+				resWinner.innerText = "Computer won!"
+			} else {
+				resWinner.innerText = "It's a draw!"
+			}
+		};
+		})
+
 		const items = ['Rock', 'Paper', 'Scissors'];
 		
 		/* returns a random move from items array */
@@ -16,40 +107,57 @@
 		/* plays a single round and returns a string */
 		function playRound(computerSelection, playerSelection) {
 			computerSelection = computerPlay();
+			round = round + 1;
 			switch (true) {
 				case (computerSelection === items[0] && playerSelection === items[2]):
+					playerScore = playerScore + 0;
+					computerScore = computerScore + 1;
 					return "You lose! " + playerSelection + " beats " + computerSelection; 
 					break;
 				case (computerSelection === items[0] && playerSelection === items[1]):
+					playerScore = playerScore + 1;
+					computerScore = computerScore + 0;
 					return "You win! " + computerSelection + " beats " + playerSelection;
 					break;
 				case (computerSelection === items[2] && playerSelection === items[0]):
+					playerScore = playerScore + 1;
+					computerScore = computerScore + 0;
 					return "You win! " + playerSelection + " beats " + computerSelection;
 					break;
 				case (computerSelection === items[2] && playerSelection === items[1]):
-					return "You win! " + computerSelection + " beats " + playerSelection;
+					playerScore = playerScore + 0;
+					computerScore = computerScore + 1;
+					return "You lose! " + computerSelection + " beats " + playerSelection;
 					break;
 				case (computerSelection === items[1] && playerSelection === items[0]):
+					playerScore = playerScore + 0;
+					computerScore = computerScore + 1;
 					return "You lose! " + playerSelection + " beats " + computerSelection;
 					break;
 				case (computerSelection === items[1] && playerSelection === items[2]):
+					playerScore = playerScore + 0;
+					computerScore = computerScore + 1;
 					return "You lose! " + computerSelection + " beats " + playerSelection;
 					break;	
 				default: 
+					playerScore = playerScore + 0;
+					computerScore = computerScore + 0;
 					return "Draw. " + computerSelection + " neither beats nor loses to " + playerSelection;
 			};
 		};
+
+
 		
-		/* plays 5 rounds*/
+		/* plays 5 rounds
 		function game() {
 			let computerScore = 0;
 			let playerScore = 0;
 			
-			/*  loops 5 rounds, logs the rounds and applies scores based on playRound result string*/
+			  loops 5 rounds, logs the rounds and applies scores based on playRound result string
 			for (let i = 0; i < 5; i++) {
 				let playerSelection = promptPlayer();
 				let currentRound = playRound(computerSelection, playerSelection);
-				/* logs each round */
+				 logs each round 
 				console.log("Round " + (i + 1) + ": " + currentRound)
 				if (currentRound.includes("You win!")) {
 					playerScore++;
@@ -58,7 +166,7 @@
 				};
 			};
 			
-			/* logs the results of the game based on score*/
+			 logs the results of the game based on score
 			if (computerScore > playerScore) {
 				console.log("You lose! You: " + playerScore + " Computer: " + computerScore);			
 			} else if (computerScore < playerScore) {
@@ -66,9 +174,11 @@
 			} else {
 				console.log("Draw. You: " + playerScore + " Computer: " + computerScore);			
 			};
-		};
+		}; */
 		
-		/* returns valid player moves based on case-insensitive regex*/
+
+
+		/* returns valid player moves based on case-insensitive regex
 		function promptPlayer() {
 			while(true) {
 				var playerSelection = prompt("Choose your move. Rock, paper or scissors?");
@@ -82,23 +192,27 @@
 					case /scissors/i.test(playerSelection):
 						return "Scissors";
 						break;
-					/* forces player to keep entering value until valid input*/
+					forces player to keep entering value until valid input
 					default:
 						alert("Not a valid move. Try again:")	
 				};
 			};
-		};
+		};*/
 		
 		const computerSelection = computerPlay();
-		game();
+		/*game();*/
 
-	</script>
+		/*appends to DOM*/
+		body.appendChild(btnPaper);
+		body.appendChild(btnRock);
+		body.appendChild(btnScissors);
+		body.appendChild(resDiv);
+		resDiv.appendChild(resRound);
+		resDiv.appendChild(resPar)
+		resDiv.appendChild(resWinner);
 
-</head>
 
-<body>
-
-
+	</script>	
 </body>
 
 
