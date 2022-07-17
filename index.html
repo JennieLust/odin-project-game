@@ -1,17 +1,47 @@
 <!DOCTYPE html>
 <html lang="en-US">
 
-
 <head>
 	<meta charset="UTF-8"> 
 	<title>JavaScript Game</title>
 	
-
 </head>
 
 <body>
 
 	<script>
+		/* TODO */
+		/* reset visuals after replay button click */
+		/* controll that score-tallying is working as it should, looks off */
+		/* 
+			paper vs rock: 1-0
+			paper vs sc: 1-1
+			paper vs paper: 1-1
+			paper vs rock: 2-1
+			paper vs paper: 2-1
+
+			OK
+
+			rock vs paper: 0-1
+			rock vs paper: 0-2
+			rock vs sc: 1-2
+			rock vs sc: 2-2
+			rock vs sc: 3-2
+
+			OK 
+
+			sc vs rock: 0-1
+			sc vs rock: 0-2
+			sc vs paper: 0-3 !!!!!!!!!!!!!!!!!!!!!!!!
+			sc vs sc: 0-3
+			sc vs paper: 0-4 !!!!!!!!
+
+		
+		
+		
+		*/
+
+
 		/*init body*/
 		const body = document.querySelector('body');
 		body.style.backgroundColor = "brown"
@@ -19,7 +49,7 @@
 		/*header*/
 		const header = document.createElement("h1");
 		header.style.color = "white";
-		header.innerText = "ROCK PAPER SCISSORS \n five round game"
+		header.innerText = "ROCK PAPER SCISSORS"
 		header.style.fontFamily = "century gothic"
 		header.style.textAlign = "center";
 		header.style.paddingTop = "20px"
@@ -29,7 +59,7 @@
 		btnDiv.style.textAlign = "center";
 		btnDiv.style.paddingTop = "10px";
 
-		/* make three buttons for each selection */ 
+		/* make three buttons for each selection and styles them */ 
 		const btnRock = document.createElement("button");
 		btnRock.innerText = "Rock";
 		btnRock.style.backgroundColor = "CadetBlue";
@@ -66,6 +96,7 @@
 		btnScissors.style.boxShadow = "0 6px 14px 0 rgba(0,0,0,0.2), 0 4px 18px 0 rgba(0,0,0,0.19)"
 		btnScissors.style.width = "120px"
 
+		/* init statistics */
 		var playerSelection = "";
 		var playerScore = 0;
 		var computerScore = 0;
@@ -87,20 +118,49 @@
 		resWinner.style.color = "yellow";
 		resWinner.style.fontSize = "30px"
 
-		/* add a re-play button/function*/
-		/* add a visual of chosen moves 
-		handurl https://img.icons8.com/color/452/hand-rock.png
-		rockurl https://img.icons8.com/emoji/452/rock-emoji.png
-		scissorsurl https://img.icons8.com/emoji/452/rock-emoji.png
-		*/
+		/* visual representation of moves chosen that round */ 
+		const moveDiv = document.createElement("div");
+		moveDiv.style.textAlign = "center";
+		moveDiv.style.fontFamily = "century gothic";
+		moveDiv.style.color = "white";
+		moveDiv.style.letterSpacing = "2px"
+		const playerImg = document.createElement("img");
+		playerImg.style.width = "40px";
+		playerImg.style.marginRight = "10px"
+		const computerImg = document.createElement("img");
+		computerImg.style.width = "40px"
+		computerImg.style.marginLeft = "10px"
+		const moveText = document.createElement("p");
+		moveText.innerText = "PLAYER  vs  COMPUTER"
 
 		/* reusable function that prompts a round, displays score */
 		function selectMove(move)  {
 			/* play round and update score/round info on screen */
-			playRound(computerSelection, playerSelection);
+			playRound(computerSelection = computerPlay(), playerSelection);
 			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
 			resRound.innerText = "Round " + round;
-
+			switch (playerSelection) {
+				case "Rock":
+					playerImg.src = "https://img.icons8.com/emoji/452/rock-emoji.png"
+					break;
+				case "Scissors":
+					playerImg.src = "https://img.icons8.com/color/452/scissors.png"
+					break;
+				case "Paper":
+					playerImg.src = "https://img.icons8.com/color/452/paper.png";
+					break;
+			};
+			switch (computerSelection) {
+				case "Rock":
+					computerImg.src = "https://img.icons8.com/emoji/452/rock-emoji.png"
+					break;
+				case "Scissors":
+					computerImg.src = "https://img.icons8.com/color/452/scissors.png"
+					break;
+				case "Paper":
+					computerImg.src = "https://img.icons8.com/color/452/paper.png";
+					break;
+			};	
 			/* when round 5, disable buttons, change color and declare results */
 			if (round >= 5) {
 			btnRock.disabled = true;
@@ -175,47 +235,38 @@
 		
 		/* plays a single round and returns a string */
 		function playRound(computerSelection, playerSelection) {
-			computerSelection = computerPlay();
 			round = round + 1;
 			switch (true) {
 				case (computerSelection === items[0] && playerSelection === items[2]):
 					playerScore = playerScore + 0;
 					computerScore = computerScore + 1;
-					return "You lose! " + playerSelection + " beats " + computerSelection; 
 					break;
 				case (computerSelection === items[0] && playerSelection === items[1]):
 					playerScore = playerScore + 1;
 					computerScore = computerScore + 0;
-					return "You win! " + computerSelection + " beats " + playerSelection;
 					break;
 				case (computerSelection === items[2] && playerSelection === items[0]):
 					playerScore = playerScore + 1;
 					computerScore = computerScore + 0;
-					return "You win! " + playerSelection + " beats " + computerSelection;
 					break;
 				case (computerSelection === items[2] && playerSelection === items[1]):
 					playerScore = playerScore + 0;
 					computerScore = computerScore + 1;
-					return "You lose! " + computerSelection + " beats " + playerSelection;
 					break;
 				case (computerSelection === items[1] && playerSelection === items[0]):
 					playerScore = playerScore + 0;
 					computerScore = computerScore + 1;
-					return "You lose! " + playerSelection + " beats " + computerSelection;
 					break;
 				case (computerSelection === items[1] && playerSelection === items[2]):
-					playerScore = playerScore + 0;
-					computerScore = computerScore + 1;
-					return "You lose! " + computerSelection + " beats " + playerSelection;
+					playerScore = playerScore + 1;
+					computerScore = computerScore + 0;
 					break;	
 				default: 
 					playerScore = playerScore + 0;
 					computerScore = computerScore + 0;
-					return "Draw. " + computerSelection + " neither beats nor loses to " + playerSelection;
 			};
 		};
 		
-		const computerSelection = computerPlay();
 
 		/*appends to DOM*/
 		body.appendChild(header);
@@ -224,6 +275,10 @@
 		btnDiv.appendChild(btnRock);
 		btnDiv.appendChild(btnScissors);
 		resDiv.appendChild(btnReplay);
+		body.appendChild(moveDiv);
+		moveDiv.appendChild(moveText);
+		moveDiv.appendChild(playerImg);
+		moveDiv.appendChild(computerImg);
 		body.appendChild(resDiv);
 		resDiv.appendChild(resRound);
 		resDiv.appendChild(resPar);
