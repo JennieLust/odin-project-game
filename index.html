@@ -53,11 +53,13 @@
 		header.style.fontFamily = "century gothic"
 		header.style.textAlign = "center";
 		header.style.paddingTop = "20px"
+		header.style.marginBottom = "60px"
+		header.style.marginTop = "20px"
 
 		/*make button div*/
 		const btnDiv = document.createElement("div");
 		btnDiv.style.textAlign = "center";
-		btnDiv.style.paddingTop = "10px";
+		btnDiv.style.paddingTop = "50px";
 
 		/* make three buttons for each selection and styles them */ 
 		const btnRock = document.createElement("button");
@@ -207,7 +209,9 @@
 			btnScissors.style.backgroundColor = "CadetBlue"
 			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
 			resRound.innerText = "Round " + round;
-			resWinner.innerText = ""
+			resWinner.innerText = "";
+			playerImg.src = "";
+			computerImg.src = "";
 			})
 
 		/*event listernets, assign playerSelection and run one round*/
@@ -270,15 +274,15 @@
 
 		/*appends to DOM*/
 		body.appendChild(header);
-		body.appendChild(btnDiv)
+		body.appendChild(moveDiv);
+		body.appendChild(btnDiv);
+		moveDiv.appendChild(moveText);
+		moveDiv.appendChild(playerImg);
+		moveDiv.appendChild(computerImg);
 		btnDiv.appendChild(btnPaper);
 		btnDiv.appendChild(btnRock);
 		btnDiv.appendChild(btnScissors);
 		resDiv.appendChild(btnReplay);
-		body.appendChild(moveDiv);
-		moveDiv.appendChild(moveText);
-		moveDiv.appendChild(playerImg);
-		moveDiv.appendChild(computerImg);
 		body.appendChild(resDiv);
 		resDiv.appendChild(resRound);
 		resDiv.appendChild(resPar);
