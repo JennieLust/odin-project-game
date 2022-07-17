@@ -66,8 +66,6 @@
 		btnScissors.style.boxShadow = "0 6px 14px 0 rgba(0,0,0,0.2), 0 4px 18px 0 rgba(0,0,0,0.19)"
 		btnScissors.style.width = "120px"
 
-		/* How do I get this to update/be called again when the values change??*/
-		/* Plus display each round in text? */
 		var playerSelection = "";
 		var playerScore = 0;
 		var computerScore = 0;
@@ -89,61 +87,83 @@
 		resWinner.style.color = "yellow";
 		resWinner.style.fontSize = "30px"
 
+		/* add a re-play button/function*/
+		/* add a visual of chosen moves 
+		handurl https://img.icons8.com/color/452/hand-rock.png
+		rockurl https://img.icons8.com/emoji/452/rock-emoji.png
+		scissorsurl https://img.icons8.com/emoji/452/rock-emoji.png
+		*/
+
+		/* reusable function that prompts a round, displays score */
+		function selectMove(move)  {
+			/* play round and update score/round info on screen */
+			playRound(computerSelection, playerSelection);
+			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+			resRound.innerText = "Round " + round;
+
+			/* when round 5, disable buttons, change color and declare results */
+			if (round >= 5) {
+			btnRock.disabled = true;
+			btnPaper.disabled = true;
+			btnScissors.disabled = true;
+			btnReplay.hidden = false;
+			btnRock.style.backgroundColor = "lightgray"
+			btnPaper.style.backgroundColor = "lightgray"
+			btnScissors.style.backgroundColor = "lightgray"
+			if (playerScore > computerScore) {
+				resWinner.innerText = "You won!"
+			} else if (playerScore < computerScore) {
+				resWinner.innerText = "Computer won!"
+			} else {
+				resWinner.innerText = "It's a draw!"
+			};
+
+		};};
+
+		const btnReplay = document.createElement("button");
+		btnReplay.innerText = "Replay"
+		btnReplay.style.backgroundColor = "CadetBlue";
+		btnReplay.style.border = "none";
+		btnReplay.style.color = "white";
+		btnReplay.style.padding = "10px 15px 10px 15px";
+		btnReplay.style.fontSize = "20px"
+		btnReplay.style.margin = "10px"
+		btnReplay.style.borderRadius = "5px"
+		btnReplay.style.boxShadow = "0 6px 14px 0 rgba(0,0,0,0.2), 0 4px 18px 0 rgba(0,0,0,0.19)"
+		btnReplay.style.width = "120px"
+		btnReplay.hidden = true;
+
+		/* resets the score/round and enables buttons again */
+		btnReplay.addEventListener('click', () => {
+			round = 0;
+			computerScore = 0;
+			playerScore = 0;
+			btnRock.disabled = false;
+			btnPaper.disabled = false;
+			btnScissors.disabled = false;
+			btnReplay.hidden = true;
+			btnRock.style.backgroundColor = "CadetBlue"
+			btnPaper.style.backgroundColor = "CadetBlue"
+			btnScissors.style.backgroundColor = "CadetBlue"
+			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
+			resRound.innerText = "Round " + round;
+			resWinner.innerText = ""
+			})
+
 		/*event listernets, assign playerSelection and run one round*/
 		btnRock.addEventListener('click', () => {
 			playerSelection = "Rock";
-			console.log(playRound(computerSelection, playerSelection))
-			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
-			resRound.innerText = "Round " + round;
-			if (round >= 5) {
-			btnRock.disabled = true;
-			btnPaper.disabled = true;
-			btnScissors.disabled = true;
-			if (playerScore > computerScore) {
-				resWinner.innerText = "You won!"
-			} else if (playerScore < computerScore) {
-				resWinner.innerText = "Computer won!"
-			} else {
-				resWinner.innerText = "It's a draw!"
-			}
-		};
-
+			selectMove("Rock");
 		});
+
 		btnPaper.addEventListener('click', () => {
 			playerSelection = "Paper";
-			console.log(playRound(computerSelection, playerSelection));
-			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
-			resRound.innerText = "Round " + round;
-			if (round >= 5) {
-			btnRock.disabled = true;
-			btnPaper.disabled = true;
-			btnScissors.disabled = true;
-			if (playerScore > computerScore) {
-				resWinner.innerText = "You won!"
-			} else if (playerScore < computerScore) {
-				resWinner.innerText = "Computer won!"
-			} else {
-				resWinner.innerText = "It's a draw!"
-			}
-		};
+			selectMove("Paper")
 		});
+
 		btnScissors.addEventListener('click', () => {
 			playerSelection = "Scissors";
-			console.log(playRound(computerSelection, playerSelection));
-			resPar.innerText = 'Score: ' + playerScore + " - " + computerScore;
-			resRound.innerText = "Round " + round;
-			if (round >= 5) {
-			btnRock.disabled = true;
-			btnPaper.disabled = true;
-			btnScissors.disabled = true;
-			if (playerScore > computerScore) {
-				resWinner.innerText = "You won!"
-			} else if (playerScore < computerScore) {
-				resWinner.innerText = "Computer won!"
-			} else {
-				resWinner.innerText = "It's a draw!"
-			}
-		};
+			selectMove("Scissors");
 		})
 
 		const items = ['Rock', 'Paper', 'Scissors'];
@@ -194,62 +214,8 @@
 					return "Draw. " + computerSelection + " neither beats nor loses to " + playerSelection;
 			};
 		};
-
-
-		
-		/* plays 5 rounds
-		function game() {
-			let computerScore = 0;
-			let playerScore = 0;
-			
-			  loops 5 rounds, logs the rounds and applies scores based on playRound result string
-			for (let i = 0; i < 5; i++) {
-				let playerSelection = promptPlayer();
-				let currentRound = playRound(computerSelection, playerSelection);
-				 logs each round 
-				console.log("Round " + (i + 1) + ": " + currentRound)
-				if (currentRound.includes("You win!")) {
-					playerScore++;
-				} else if (currentRound.includes("You lose!")) {
-					computerScore++;
-				};
-			};
-			
-			 logs the results of the game based on score
-			if (computerScore > playerScore) {
-				console.log("You lose! You: " + playerScore + " Computer: " + computerScore);			
-			} else if (computerScore < playerScore) {
-				console.log("You win! You: " + playerScore + " Computer: " + computerScore);			
-			} else {
-				console.log("Draw. You: " + playerScore + " Computer: " + computerScore);			
-			};
-		}; */
-		
-
-
-		/* returns valid player moves based on case-insensitive regex
-		function promptPlayer() {
-			while(true) {
-				var playerSelection = prompt("Choose your move. Rock, paper or scissors?");
-				switch (true){
-					case /rock/i.test(playerSelection):
-						return "Rock";
-						break;
-					case /paper/i.test(playerSelection):
-						return "Paper";
-						break;
-					case /scissors/i.test(playerSelection):
-						return "Scissors";
-						break;
-					forces player to keep entering value until valid input
-					default:
-						alert("Not a valid move. Try again:")	
-				};
-			};
-		};*/
 		
 		const computerSelection = computerPlay();
-		/*game();*/
 
 		/*appends to DOM*/
 		body.appendChild(header);
@@ -257,10 +223,12 @@
 		btnDiv.appendChild(btnPaper);
 		btnDiv.appendChild(btnRock);
 		btnDiv.appendChild(btnScissors);
+		resDiv.appendChild(btnReplay);
 		body.appendChild(resDiv);
 		resDiv.appendChild(resRound);
-		resDiv.appendChild(resPar)
+		resDiv.appendChild(resPar);
 		resDiv.appendChild(resWinner);
+		
 
 
 	</script>	
